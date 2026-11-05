@@ -17,7 +17,7 @@ export function Navbar() {
           </Link>
 
           <Link 
-            href="/"
+            href="/login"
             className=" font-bold border-2 border-slate-800 text-black px-4 py-2 rounded-lg hover:bg-slate-800 hover:text-white transition"
           >
             Giriş Yap

@@ -17,8 +17,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         className={`${inter.className} min-h-screen flex flex-col antialiased`}
         suppressHydrationWarning
       >
-        <Navbar />
-        <main className="flex-1 flex flex-col">{children}</main>
+        {children}
       </body>
     </html>
   );
