@@ -4,7 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using TravelApp.Application.Common.Behaviours;
 
 namespace TravelApp.Application
 {
@@ -18,6 +20,7 @@ namespace TravelApp.Application
 
             services.AddMediatR(cfg => {
                 cfg.RegisterServicesFromAssembly(assembly);
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             });
             
             return services;
