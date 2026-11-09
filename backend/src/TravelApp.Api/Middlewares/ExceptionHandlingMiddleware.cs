@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CustomValidationException = TravelApp.Application.Common.Exceptions.ValidationException;
@@ -88,6 +89,26 @@ namespace TravelApp.Api.Middlewares
                     }
                 )
             };
+
+            // _logger.LogError(exception, "An unhandled exception occurred: {Message}", exception.Message);
+
+            // if (context.Response.HasStarted)
+            // {
+            //     _logger.LogWarning("The response has already started, the exception handling middleware will not write a response.");
+            //     return;
+            // }
+
+            // context.Response.StatusCode = statusCode;
+            // await context.Response.WriteAsJsonAsync(problemDetails);
+
+            if (statusCode == (int)HttpStatusCode.InternalServerError)
+            {
+                _logger.LogError(exception, "An unhandled exception occurred: {Message}", exception.Message);
+            }
+
+            context.Response.StatusCode = statusCode;
+            var json = JsonSerializer.Serialize(problemDetails);
+            await context.Response.WriteAsync(json);
         }
     }
 }

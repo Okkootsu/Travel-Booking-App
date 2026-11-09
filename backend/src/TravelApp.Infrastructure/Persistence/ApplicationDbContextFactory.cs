@@ -19,7 +19,7 @@ namespace TravelApp.Infrastructure.Persistence
                 .SetBasePath(basePath)
                 .AddJsonFile("appsettings.json", optional: true)
                 .AddJsonFile("appsettings.Development.json", optional: true)
-                .AddUserSecrets(System.Reflection.Assembly.Load("FlexSpace.WebApi"), optional: true)
+                .AddUserSecrets(System.Reflection.Assembly.Load("TravelApp.Api"), optional: true)
                 .AddEnvironmentVariables()
                 .Build();
 
