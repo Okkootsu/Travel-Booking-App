@@ -69,6 +69,15 @@ namespace TravelApp.Api.Middlewares
                         Detail = opEx.Message
                     }
                 ),
+                UnauthorizedAccessException unauthEx => (
+                    (int)HttpStatusCode.Unauthorized,
+                    new ProblemDetails
+                    {
+                        Status = (int)HttpStatusCode.Unauthorized,
+                        Title = "Unauthorized",
+                        Detail = unauthEx.Message   
+                    }
+                ),
                 _ => (
                     (int)HttpStatusCode.InternalServerError,
                     new ProblemDetails
