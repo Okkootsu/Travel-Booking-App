@@ -17,7 +17,7 @@ export function Navbar() {
         </Link>
 
         <nav className="flex items-center gap-6 text-sm font-medium text-slate-600">
-          <Link href="/" className="hover:text-slate-900 transition">
+          <Link href="/accomodations" className="hover:text-slate-900 transition">
             Tüm Konaklamalar
           </Link>
 
