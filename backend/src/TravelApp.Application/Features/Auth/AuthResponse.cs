@@ -11,6 +11,6 @@ namespace TravelApp.Application.Features.Auth
         string Role,
         string AccessToken,
         string RefreshToken,
-        DateTime AccessTokenExpirationUtc
+        DateTime RefreshTokenExpirationUtc
     );
 }
