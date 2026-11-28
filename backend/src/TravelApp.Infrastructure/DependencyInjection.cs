@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TravelApp.Application.Common.Interfaces;
 using TravelApp.Infrastructure.Persistence;
 using TravelApp.Infrastructure.Persistence.Repositories;
+using TravelApp.Infrastructure.Persistence.Seed;
 
 namespace TravelApp.Infrastructure
 {
@@ -23,6 +24,7 @@ namespace TravelApp.Infrastructure
             // Sözleşmelerin somut sınıflarla eşleştirilmesi
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<AccommodationDataSeeder>();
             
             // Güvenlik servisleri
             services.AddSingleton<IPasswordHasher, Services.PasswordHasher>();

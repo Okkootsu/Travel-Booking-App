@@ -22,6 +22,292 @@ namespace TravelApp.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("TravelApp.Domain.Entities.Amenity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("IconKey")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<int>("Scope")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("Amenities", (string)null);
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.Destination", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("character varying(2)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryCode");
+
+                    b.HasIndex("Name");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.ToTable("Destinations", (string)null);
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.Hotel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("AverageRating")
+                        .HasPrecision(3, 2)
+                        .HasColumnType("numeric(3,2)");
+
+                    b.Property<TimeOnly>("CheckInTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<TimeOnly>("CheckOutTime")
+                        .HasColumnType("time without time zone");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<Guid>("DestinationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("PropertyType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ReviewCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(220)
+                        .HasColumnType("character varying(220)");
+
+                    b.Property<int>("StarRating")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.HasIndex("Status", "PropertyType");
+
+                    b.HasIndex("DestinationId", "Status", "StarRating");
+
+                    b.ToTable("Hotels", (string)null);
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.HotelAmenity", b =>
+                {
+                    b.Property<Guid>("HotelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AmenityId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("HotelId", "AmenityId");
+
+                    b.HasIndex("AmenityId");
+
+                    b.ToTable("HotelAmenities", (string)null);
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.HotelImage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AltText")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("HotelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("RoomTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HotelId")
+                        .IsUnique()
+                        .HasFilter("\"IsPrimary\" = true");
+
+                    b.HasIndex("RoomTypeId");
+
+                    b.HasIndex("HotelId", "SortOrder");
+
+                    b.ToTable("HotelImages", (string)null);
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.RoomType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("BedConfiguration")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<Guid>("HotelId")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("character varying(150)");
+
+                    b.Property<int?>("SizeSqm")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TotalRoomCount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HotelId", "IsActive");
+
+                    b.HasIndex("HotelId", "Name")
+                        .IsUnique();
+
+                    b.ToTable("RoomTypes", (string)null);
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.RoomTypeAmenity", b =>
+                {
+                    b.Property<Guid>("RoomTypeId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AmenityId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("RoomTypeId", "AmenityId");
+
+                    b.HasIndex("AmenityId");
+
+                    b.ToTable("RoomTypeAmenities", (string)null);
+                });
+
             modelBuilder.Entity("TravelApp.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -59,6 +345,234 @@ namespace TravelApp.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.Destination", b =>
+                {
+                    b.OwnsOne("TravelApp.Domain.ValueObjects.GeoLocation", "Location", b1 =>
+                        {
+                            b1.Property<Guid>("DestinationId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("Latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("Longitude");
+
+                            b1.HasKey("DestinationId");
+
+                            b1.ToTable("Destinations");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DestinationId");
+                        });
+
+                    b.Navigation("Location")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.Hotel", b =>
+                {
+                    b.HasOne("TravelApp.Domain.Entities.Destination", null)
+                        .WithMany()
+                        .HasForeignKey("DestinationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsOne("TravelApp.Domain.ValueObjects.GeoLocation", "Location", b1 =>
+                        {
+                            b1.Property<Guid>("HotelId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("Latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("double precision")
+                                .HasColumnName("Longitude");
+
+                            b1.HasKey("HotelId");
+
+                            b1.ToTable("Hotels");
+
+                            b1.WithOwner()
+                                .HasForeignKey("HotelId");
+                        });
+
+                    b.OwnsOne("TravelApp.Domain.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("HotelId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("AddressCity");
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("AddressCountry");
+
+                            b1.Property<string>("District")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("AddressDistrict");
+
+                            b1.Property<string>("PostalCode")
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)")
+                                .HasColumnName("AddressPostalCode");
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(250)
+                                .HasColumnType("character varying(250)")
+                                .HasColumnName("AddressStreet");
+
+                            b1.HasKey("HotelId");
+
+                            b1.ToTable("Hotels");
+
+                            b1.WithOwner()
+                                .HasForeignKey("HotelId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("Location")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.HotelAmenity", b =>
+                {
+                    b.HasOne("TravelApp.Domain.Entities.Amenity", null)
+                        .WithMany()
+                        .HasForeignKey("AmenityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelApp.Domain.Entities.Hotel", null)
+                        .WithMany("HotelAmenities")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.HotelImage", b =>
+                {
+                    b.HasOne("TravelApp.Domain.Entities.Hotel", null)
+                        .WithMany("Images")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelApp.Domain.Entities.RoomType", null)
+                        .WithMany()
+                        .HasForeignKey("RoomTypeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.RoomType", b =>
+                {
+                    b.HasOne("TravelApp.Domain.Entities.Hotel", null)
+                        .WithMany("RoomTypes")
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("TravelApp.Domain.ValueObjects.Money", "BaseNightlyPrice", b1 =>
+                        {
+                            b1.Property<Guid>("RoomTypeId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasPrecision(18, 2)
+                                .HasColumnType("numeric(18,2)")
+                                .HasColumnName("BaseNightlyPriceAmount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasMaxLength(3)
+                                .HasColumnType("character varying(3)")
+                                .HasColumnName("BaseNightlyPriceCurrency");
+
+                            b1.HasKey("RoomTypeId");
+
+                            b1.ToTable("RoomTypes");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RoomTypeId");
+                        });
+
+                    b.OwnsOne("TravelApp.Domain.ValueObjects.Occupancy", "Occupancy", b1 =>
+                        {
+                            b1.Property<Guid>("RoomTypeId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<int>("MaxAdults")
+                                .HasColumnType("integer")
+                                .HasColumnName("MaxAdults");
+
+                            b1.Property<int>("MaxChildren")
+                                .HasColumnType("integer")
+                                .HasColumnName("MaxChildren");
+
+                            b1.Property<int>("MaxTotalGuests")
+                                .HasColumnType("integer")
+                                .HasColumnName("MaxTotalGuests");
+
+                            b1.HasKey("RoomTypeId");
+
+                            b1.HasIndex("MaxAdults", "MaxTotalGuests");
+
+                            b1.ToTable("RoomTypes");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RoomTypeId");
+                        });
+
+                    b.Navigation("BaseNightlyPrice")
+                        .IsRequired();
+
+                    b.Navigation("Occupancy")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.RoomTypeAmenity", b =>
+                {
+                    b.HasOne("TravelApp.Domain.Entities.Amenity", null)
+                        .WithMany()
+                        .HasForeignKey("AmenityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TravelApp.Domain.Entities.RoomType", null)
+                        .WithMany("RoomTypeAmenities")
+                        .HasForeignKey("RoomTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.Hotel", b =>
+                {
+                    b.Navigation("HotelAmenities");
+
+                    b.Navigation("Images");
+
+                    b.Navigation("RoomTypes");
+                });
+
+            modelBuilder.Entity("TravelApp.Domain.Entities.RoomType", b =>
+                {
+                    b.Navigation("RoomTypeAmenities");
                 });
 #pragma warning restore 612, 618
         }

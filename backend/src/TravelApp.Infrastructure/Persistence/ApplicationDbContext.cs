@@ -22,6 +22,13 @@ namespace TravelApp.Infrastructure.Persistence
         }
 
         public DbSet<User> Users => Set<User>();
+        public DbSet<Destination> Destinations => Set<Destination>();
+        public DbSet<Amenity> Amenities => Set<Amenity>();
+        public DbSet<Hotel> Hotels => Set<Hotel>();
+        public DbSet<RoomType> RoomTypes => Set<RoomType>();
+        public DbSet<HotelImage> HotelImages => Set<HotelImage>();
+        public DbSet<HotelAmenity> HotelAmenities => Set<HotelAmenity>();
+        public DbSet<RoomTypeAmenity> RoomTypeAmenities => Set<RoomTypeAmenity>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

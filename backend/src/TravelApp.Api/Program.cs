@@ -7,6 +7,7 @@ using TravelApp.Api.Services;
 using TravelApp.Application;
 using TravelApp.Application.Common.Interfaces;
 using TravelApp.Infrastructure;
+using TravelApp.Infrastructure.Persistence.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -97,6 +98,7 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
+    await app.Services.SeedAccommodationDataAsync();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
